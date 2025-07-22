@@ -12,7 +12,7 @@
 
 rm(list = ls())
 require(pacman)
-pacman::p_load(ggplot2,ggmap,readxl,sf,tmap,dplyr,ggspatial,ggtext)
+pacman::p_load(ggplot2,ggmap,readxl,sf,tmap,dplyr,ggspatial,ggtext,cowplot,gginsetmap,patchwork)
 
 # Load Nigeria Shapefile
 nigeria <- st_read("Nigeria_Poly.shp")
@@ -25,21 +25,21 @@ kano <- st_read("NGA_adm2.shp") %>%
 
 kano_study <- kano %>% filter(grepl("Dala|Fagge|Gezawa|Gwale|Kano|Kumbotso|Nassaraw|Tarauni|Ungogo", NAME_2))
 
- # Calculate centroids for labeling
- nigeria$centroid <- st_centroid(nigeria$geometry)
- kano$centroid <- st_centroid(kano$geometry) 
- kano_study$centroid <- st_centroid(kano_study$geometry) 
- 
- # Extract centroid coordinates
- nigeria_coords <- as.data.frame(st_coordinates(nigeria$centroid))
- nigeria_coords$state_name <- nigeria$name  
+# Calculate centroids for labeling
+nigeria$centroid <- st_centroid(nigeria$geometry)
+kano$centroid <- st_centroid(kano$geometry) 
+kano_study$centroid <- st_centroid(kano_study$geometry) 
 
- kano_coords <- as.data.frame(st_coordinates(kano$centroid))
- kano_coords$NAME_2 <- kano$NAME_2  
+# Extract centroid coordinates
+nigeria_coords <- as.data.frame(st_coordinates(nigeria$centroid))
+nigeria_coords$state_name <- nigeria$name  
 
- study_coords <- as.data.frame(st_coordinates(kano_study$centroid))
- study_coords$NAME_2 <- kano_study$NAME_2 
- 
+kano_coords <- as.data.frame(st_coordinates(kano$centroid))
+kano_coords$NAME_2 <- kano$NAME_2  
+
+study_coords <- as.data.frame(st_coordinates(kano_study$centroid))
+study_coords$NAME_2 <- kano_study$NAME_2 
+
 #Map of Nigeria showing Kano State
 plot1 <- ggplot() +
   geom_sf(data = nigeria, fill = "lightyellow", color = "black") +  # Base map
@@ -96,9 +96,15 @@ plot3 <- ggplot() +
     axis.ticks = element_blank()
   ) +
   geom_text(aes(x = Inf, y = Inf, label = "Study Area"),
-            hjust = 4.2, vjust = 2.5,
+            hjust = 3.5, vjust = 2.5,
             size = 4, fontface = "bold", color = "black",
             inherit.aes = FALSE)
 
 ggsave("Map_Files/Study_Area.png", plot = plot3, width = 8, height = 6, dpi = 300)
 
+final_map <- plot1 + plot2 + plot3 + 
+  plot_layout(ncol = 3, widths = c(2.5, 1.9, 1.6)) & 
+  theme(plot.margin = margin(5, 5, 5, 5))
+
+ggsave("Map_Files/Final_Map.png", plot = final_map,
+       width = 16, height = 6, dpi = 300)
