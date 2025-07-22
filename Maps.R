@@ -59,7 +59,7 @@ plot1 <- ggplot() +
             size = 4, fontface = "bold", color = "black",
             inherit.aes = FALSE)
 
-ggsave("Map_Files/Nigeria.png", plot = plot1, width = 8, height = 6, dpi = 300)
+ggsave("Nigeria.png", plot = plot1, width = 8, height = 6, dpi = 300)
 
 #Map of Kano State showing Kano City
 plot2 <- ggplot() +
@@ -80,7 +80,7 @@ plot2 <- ggplot() +
             size = 4, fontface = "bold", color = "black",
             inherit.aes = FALSE)
 
-ggsave("Map_Files/Kano.png", plot = plot2, width = 8, height = 6, dpi = 300)
+ggsave("Kano.png", plot = plot2, width = 8, height = 6, dpi = 300)
 
 #Map of study area
 plot3 <- ggplot() +
@@ -100,11 +100,11 @@ plot3 <- ggplot() +
             size = 4, fontface = "bold", color = "black",
             inherit.aes = FALSE)
 
-ggsave("Map_Files/Study_Area.png", plot = plot3, width = 8, height = 6, dpi = 300)
+ggsave("Study_Area.png", plot = plot3, width = 8, height = 6, dpi = 300)
 
 final_map <- plot1 + plot2 + plot3 + 
   plot_layout(ncol = 3, widths = c(2.5, 1.9, 1.6)) & 
   theme(plot.margin = margin(5, 5, 5, 5))
 
-ggsave("Map_Files/Final_Map.png", plot = final_map,
+ggsave("Final_Map.png", plot = final_map,
        width = 16, height = 6, dpi = 300)
