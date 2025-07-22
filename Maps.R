@@ -1,3 +1,15 @@
+# ==============================================================================
+# Title:           [Microbiome Nigeria Study Site Maps]
+# Author:          [Jared Oduwo]
+# Date:            [2024-11-22]
+# Version:         [1]
+# Description:     [Generate a map of Kano Nigeria showimg the Microbiome study site]
+# ==============================================================================
+
+# ==============================================================================
+# Load Libraries
+# ==============================================================================
+
 rm(list = ls())
 require(pacman)
 pacman::p_load(ggplot2,ggmap,readxl,sf,tmap,dplyr,ggspatial,ggtext)
@@ -33,7 +45,7 @@ plot1 <- ggplot() +
   geom_sf(data = nigeria, fill = "lightyellow", color = "black") +  # Base map
   geom_sf(data = kano_nig, fill = "red", color = "black")+
   geom_text(data = nigeria_coords, aes(X, Y, label = state_name), size = 4, color = "black") + 
-  coord_sf(datum = NA) + 
+  coord_sf(datum = NA) +  # Use coord_sf to add grid lines
   theme_minimal() +
   theme(
     panel.grid.major = element_line(color = "grey", linetype = "dashed"), # Customize grid lines
