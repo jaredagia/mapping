@@ -1,6 +1,6 @@
 ##Nigeria Mapping in R: Kano State and Study Area
 
-This folder contains an R script that generates maps using shapefiles to visualize:
+This repository contains an R script that generates maps using shapefiles to visualize:
 1. The entire country of Nigeria, highlighting Kano State
 2. Kano State, highlighting key Local Government Areas (LGAs)
 3. The specific study area within Kano City
